@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Money Meter – Full CRUD Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #0b1120;
+      --border: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --danger: #fb7185;
+      --warning: #f97316;
+      --info: #38bdf8;
+      --radius-lg: 18px;
+      --radius-md: 10px;
+      --shadow-soft: 0 22px 60px rgba(15, 23, 42, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, #1f2937 0, #020617 50%),
+        radial-gradient(circle at bottom right, #020617 0, #000 50%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 16px 18px 40px;
+    }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      padding: 2px;
+      background: conic-gradient(
+        from 220deg,
+        #22c55e,
+        #38bdf8,
+        #a855f7,
+        #22c55e
+      );
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 16px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .brand-logo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 5px;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      backdrop-filter: blur(16px);
+    }
+
+    nav a {
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.18s ease;
+      white-space: nowrap;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: rgba(148, 163, 184, 0.18);
+      color: var(--text);
+    }
+
+    nav a.active {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #020617;
+      font-weight: 600;
+      box-shadow:
+        0 0 0 1px rgba(22, 163, 74, 0.8),
+        0 16px 40px rgba(22, 163, 74, 0.45);
+    }
+
+    @media (max-width: 840px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+      nav { width: 100%; justify-content: space-between; }
+    }
+
+    @media (max-width: 600px) {
+      nav { flex-wrap: wrap; justify-content: center; }
+    }
+
+    /* Hero */
+    .hero {
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-main { max-width: 460px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 10px;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e 0, #16a34a 40%, transparent 60%);
+    }
+
+    .hero h2 {
+      font-size: clamp(22px, 3vw, 26px);
+      line-height: 1.4;
+    }
+    .hero h2 span { color: var(--accent); }
+
+    .hero p {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 380px;
+    }
+
+    .hero-highlight {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      align-items: flex-end;
+      min-width: 160px;
+    }
+
+    .hero-number {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .hero-tagline {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+    }
+    .hero-chip {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      margin-top: 4px;
+    }
+
+    /* Layout */
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+    @media (max-width: 960px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #0b1120, #020617);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 16px 18px 18px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 14px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.38);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+    .badge-success {
+      background: var(--accent-soft);
+      border-color: rgba(34, 197, 94, 0.7);
+      color: var(--accent);
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 2px;
+      display: inline-block;
+    }
+
+    .field { margin-bottom: 6px; }
+
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    input::placeholder { color: #4b5563; }
+
+    input:focus, select:focus {
+      outline: 1px solid rgba(34, 197, 94, 0.85);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+    }
+
+    .login-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .login-caption {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #020617;
+      font-weight: 600;
+      box-shadow:
+        0 14px 30px rgba(34, 197, 94, 0.4),
+        0 0 0 1px rgba(22, 163, 74, 0.7);
+      transition: 0.18s ease;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow:
+        0 6px 18px rgba(34, 197, 94, 0.35),
+        0 0 0 1px rgba(22, 163, 74, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      box-shadow: none;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding-inline: 10px;
+      font-size: 11px;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      transform: none;
+    }
+
+    /* Charts grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr);
+      gap: 14px;
+      margin-top: 8px;
+    }
+    @media (max-width: 720px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar-label {
+      width: 82px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0;
+      transition: width 0.25s ease;
+    }
+
+    .bar-fill-income {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+    }
+    .bar-fill-expense {
+      background: linear-gradient(90deg, #f97316, #ea580c);
+    }
+    .bar-fill-balance {
+      background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+    }
+
+    .bar-value {
+      width: 74px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .bar-legend {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      margin-right: 4px;
+      display: inline-block;
+    }
+
+    /* Pie chart */
+    .pie-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 2px;
+    }
+
+    .pie {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(#1f2937 0 100%);
+      position: relative;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.95);
+    }
+
+    .pie::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: inherit;
+      background: #020617;
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .pie-center-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .pie-center-text strong {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .pie-details {
+      flex: 1;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pie-list {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pie-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--muted);
+    }
+
+    /* Tables */
+    .table-wrapper {
+      margin-top: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      background: rgba(15, 23, 42, 0.9);
+      max-height: 240px;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: #020617;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.85);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+
+    .link {
+      font-size: 11px;
+      color: var(--info);
+      cursor: pointer;
+    }
+
+    .link-danger {
+      color: var(--danger);
+    }
+
+    .type-pill-income {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: rgba(22, 163, 74, 0.18);
+      color: var(--accent);
+      border: 1px solid rgba(22, 163, 74, 0.6);
+    }
+
+    .type-pill-expense {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: rgba(248, 113, 113, 0.16);
+      color: var(--danger);
+      border: 1px solid rgba(248, 113, 113, 0.7);
+    }
+
+    /* Goal progress bars */
+    .goal-progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      overflow: hidden;
+    }
+    .goal-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      width: 0;
+    }
+
+    /* Future mini cards */
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    @media (max-width: 640px) {
+      .future-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .mini {
+      border-radius: var(--radius-md);
+      padding: 9px 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .mini-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+    .mini-value {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .pill-trend {
+      align-self: flex-start;
+      font-size: 10px;
+      border-radius: 999px;
+      padding: 1px 6px;
+      border: 1px solid rgba(22, 163, 74, 0.7);
+      color: var(--accent);
+      background: rgba(21, 128, 61, 0.16);
+    }
+    .pill-trend-down {
+      border-color: rgba(248, 113, 113, 0.8);
+      color: var(--danger);
+      background: rgba(127, 29, 29, 0.28);
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">
+          <div class="brand-logo-inner">MM</div>
+        </div>
+        <div class="brand-text">
+          <h1>Money Meter</h1>
+          <span>Income · Expense · Goals</span>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#dashboard" class="active">Dashboard</a>
+        <a href="#goals">Goal Tracker</a>
+        <a href="#future">Future Amount</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="dashboard">
+      <div class="hero-main">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          Full CRUD money view
+        </div>
+        <h2>
+          Manage your <span>transactions</span>, <span>goals</span> and
+          <span>future projections</span> in one calm dashboard.
+        </h2>
+        <p>
+          Everything stays in your browser using localStorage: add, edit and delete
+          items, and your charts and cards update instantly.
+        </p>
+      </div>
+      <div class="hero-highlight">
+        <div class="hero-number" id="heroBalance">₹0</div>
+        <div class="hero-tagline">Current net balance</div>
+        <div class="hero-chip" id="heroChip">No data yet</div>
+      </div>
+    </section>
+
+    <main>
+      <!-- LEFT: Charts + Transactions CRUD -->
+      <section>
+        <!-- Charts -->
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Income vs Expenses</div>
+              <div class="card-sub">Updated from your transactions CRUD</div>
+            </div>
+            <span class="badge" id="badgeStatus">Waiting</span>
+          </div>
+
+          <div class="charts-grid">
+            <!-- Bar chart -->
+            <div>
+              <div class="bar-chart">
+                <div class="bar-row">
+                  <div class="bar-label">Income</div>
+                  <div class="bar-track">
+                    <div class="bar-fill bar-fill-income" id="barIncome"></div>
+                  </div>
+                  <div class="bar-value" id="valIncome">₹0</div>
+                </div>
+                <div class="bar-row">
+                  <div class="bar-label">Expenses</div>
+                  <div class="bar-track">
+                    <div class="bar-fill bar-fill-expense" id="barExpense"></div>
+                  </div>
+                  <div class="bar-value" id="valExpense">₹0</div>
+                </div>
+                <div class="bar-row">
+                  <div class="bar-label">Saved</div>
+                  <div class="bar-track">
+                    <div class="bar-fill bar-fill-balance" id="barSaved"></div>
+                  </div>
+                  <div class="bar-value" id="valSaved">₹0</div>
+                </div>
+              </div>
+
+              <div class="bar-legend">
+                <span><span class="dot" style="background:#22c55e;"></span>Income</span>
+                <span><span class="dot" style="background:#f97316;"></span>Expenses</span>
+                <span><span class="dot" style="background:#38bdf8;"></span>Savings</span>
+              </div>
+            </div>
+
+            <!-- Pie chart -->
+            <div>
+              <div class="pie-layout">
+                <div class="pie" aria-label="Spending categories pie chart" id="pieChart">
+                  <div class="pie-center-text">
+                    <span>Spending</span>
+                    <strong id="piePercent">0%</strong>
+                  </div>
+                </div>
+                <div class="pie-details">
+                  <div class="pill">Expense categories from your data</div>
+                  <div class="pie-list">
+                    <div class="pie-item">
+                      <span><span class="dot" style="background:#22c55e;"></span>Essentials</span>
+                      <span id="pEssentials">0%</span>
+                    </div>
+                    <div class="pie-item">
+                      <span><span class="dot" style="background:#f97316;"></span>Lifestyle</span>
+                      <span id="pLifestyle">0%</span>
+                    </div>
+                    <div class="pie-item">
+                      <span><span class="dot" style="background:#38bdf8;"></span>Other</span>
+                      <span id="pOther">0%</span>
+                    </div>
+                  </div>
+                  <p style="margin-top:6px;font-size:11px;">
+                    Income rows are excluded. Category text on each expense determines
+                    which slice it belongs to.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Transactions CRUD -->
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Transactions CRUD</div>
+              <div class="card-sub">Create, read, update, delete</div>
+            </div>
+            <button type="button" class="btn-ghost" id="btnClearTx">Clear all</button>
+          </div>
+
+          <form id="txForm" class="stack" autocomplete="off">
+            <input type="hidden" id="txId" />
+            <div class="field">
+              <label for="txType">Type</label>
+              <select id="txType">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="txAmount">Amount (₹)</label>
+              <input id="txAmount" type="number" step="0.01" min="0" placeholder="e.g. 1200" required />
+            </div>
+            <div class="field">
+              <label for="txCategory">Category</label>
+              <input id="txCategory" type="text" placeholder="e.g. Salary, Rent, Food" />
+            </div>
+            <div class="field">
+              <label for="txNote">Note (optional)</label>
+              <input id="txNote" type="text" placeholder="Short description" />
+            </div>
+            <div class="login-row">
+              <div class="login-caption" id="formStatusTx">Creating new transaction</div>
+              <button type="submit" id="btnSubmitTx">Add</button>
+            </div>
+          </form>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>Note</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="txBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <!-- RIGHT: Goals CRUD + Future CRUD -->
+      <section>
+        <!-- GOAL TRACKER CRUD -->
+        <section class="card" id="goals">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Goal Tracker CRUD</div>
+              <div class="card-sub">Maintain your savings goals list</div>
+            </div>
+            <button type="button" class="btn-ghost" id="btnClearGoals">Clear goals</button>
+          </div>
+
+          <form id="goalForm" class="stack" autocomplete="off">
+            <input type="hidden" id="goalId" />
+            <div class="field">
+              <label for="goalName">Goal name</label>
+              <input id="goalName" type="text" placeholder="e.g. Emergency Fund" required />
+            </div>
+            <div class="field">
+              <label for="goalTarget">Target amount (₹)</label>
+              <input id="goalTarget" type="number" step="0.01" min="0" placeholder="e.g. 75000" required />
+            </div>
+            <div class="field">
+              <label for="goalSaved">Saved so far (₹)</label>
+              <input id="goalSaved" type="number" step="0.01" min="0" placeholder="e.g. 50000" required />
+            </div>
+            <div class="login-row">
+              <div class="login-caption" id="formStatusGoal">Creating new goal</div>
+              <button type="submit" id="btnSubmitGoal">Add goal</button>
+            </div>
+          </form>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Goal</th>
+                  <th>Saved / Target</th>
+                  <th>Progress</th>
+                  <th style="text-align:right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="goalBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- FUTURE AMOUNT CRUD -->
+        <section class="card" id="future">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Future Amount CRUD</div>
+              <div class="card-sub">Define your own projections</div>
+            </div>
+            <button type="button" class="btn-ghost" id="btnClearFuture">Clear future cards</button>
+          </div>
+
+          <form id="futureForm" class="stack" autocomplete="off">
+            <input type="hidden" id="futureId" />
+            <div class="field">
+              <label for="futureLabel">Label</label>
+              <input id="futureLabel" type="text" placeholder="e.g. End of Month" required />
+            </div>
+            <div class="field">
+              <label for="futureAmount">Expected amount (₹)</label>
+              <input id="futureAmount" type="number" step="0.01" min="0" placeholder="e.g. 42500" required />
+            </div>
+            <div class="field">
+              <label for="futureTrend">Trend / note (short)</label>
+              <input id="futureTrend" type="text" placeholder="+12% vs last month" />
+            </div>
+            <div class="login-row">
+              <div class="login-caption" id="formStatusFuture">Creating new future card</div>
+              <button type="submit" id="btnSubmitFuture">Add card</button>
+            </div>
+          </form>
+
+          <div class="future-grid" id="futureGrid">
+            <!-- cards injected by JS -->
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      All CRUD data (transactions, goals, future cards) is stored in your browser using localStorage.
+    </footer>
+  </div>
+
+  <script>
+    /* STORAGE KEYS */
+    const STORAGE_TX = "mm_transactions_v2";
+    const STORAGE_GOAL = "mm_goals_v1";
+    const STORAGE_FUTURE = "mm_future_v1";
+
+    /* SHARED HELPERS */
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2);
+    }
+
+    function formatCurrency(v) {
+      return "₹" + v.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    function loadArray(key) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveArray(key, arr) {
+      try {
+        localStorage.setItem(key, JSON.stringify(arr));
+      } catch {
+        // ignore
+      }
+    }
+
+    /* STATE */
+    let transactions = loadArray(STORAGE_TX).map(t => ({
+      id: String(t.id || generateId()),
+      type: t.type === "expense" ? "expense" : "income",
+      amount: Number(t.amount) || 0,
+      category: t.category || "",
+      note: t.note || ""
+    }));
+    let goals = loadArray(STORAGE_GOAL).map(g => ({
+      id: String(g.id || generateId()),
+      name: g.name || "",
+      target: Number(g.target) || 0,
+      saved: Number(g.saved) || 0
+    }));
+    let futures = loadArray(STORAGE_FUTURE).map(f => ({
+      id: String(f.id || generateId()),
+      label: f.label || "",
+      amount: Number(f.amount) || 0,
+      trend: f.trend || ""
+    }));
+
+    /* DOM REFS: TRANSACTIONS + CHARTS */
+    const heroBalance = document.getElementById("heroBalance");
+    const heroChip = document.getElementById("heroChip");
+    const badgeStatus = document.getElementById("badgeStatus");
+
+    const barIncome = document.getElementById("barIncome");
+    const barExpense = document.getElementById("barExpense");
+    const barSaved = document.getElementById("barSaved");
+    const valIncome = document.getElementById("valIncome");
+    const valExpense = document.getElementById("valExpense");
+    const valSaved = document.getElementById("valSaved");
+
+    const pieChart = document.getElementById("pieChart");
+    const piePercent = document.getElementById("piePercent");
+    const pEssentials = document.getElementById("pEssentials");
+    const pLifestyle = document.getElementById("pLifestyle");
+    const pOther = document.getElementById("pOther");
+
+    const txForm = document.getElementById("txForm");
+    const txId = document.getElementById("txId");
+    const txType = document.getElementById("txType");
+    const txAmount = document.getElementById("txAmount");
+    const txCategory = document.getElementById("txCategory");
+    const txNote = document.getElementById("txNote");
+    const txBody = document.getElementById("txBody");
+    const formStatusTx = document.getElementById("formStatusTx");
+    const btnSubmitTx = document.getElementById("btnSubmitTx");
+    const btnClearTx = document.getElementById("btnClearTx");
+    let editingTxId = null;
+
+    /* DOM REFS: GOALS */
+    const goalForm = document.getElementById("goalForm");
+    const goalId = document.getElementById("goalId");
+    const goalName = document.getElementById("goalName");
+    const goalTarget = document.getElementById("goalTarget");
+    const goalSaved = document.getElementById("goalSaved");
+    const goalBody = document.getElementById("goalBody");
+    const formStatusGoal = document.getElementById("formStatusGoal");
+    const btnSubmitGoal = document.getElementById("btnSubmitGoal");
+    const btnClearGoals = document.getElementById("btnClearGoals");
+    let editingGoalId = null;
+
+    /* DOM REFS: FUTURE */
+    const futureForm = document.getElementById("futureForm");
+    const futureId = document.getElementById("futureId");
+    const futureLabel = document.getElementById("futureLabel");
+    const futureAmount = document.getElementById("futureAmount");
+    const futureTrend = document.getElementById("futureTrend");
+    const futureGrid = document.getElementById("futureGrid");
+    const formStatusFuture = document.getElementById("formStatusFuture");
+    const btnSubmitFuture = document.getElementById("btnSubmitFuture");
+    const btnClearFuture = document.getElementById("btnClearFuture");
+    let editingFutureId = null;
+
+    /* TRANSACTIONS: RENDER + RECALC */
+    function resetTxForm() {
+      editingTxId = null;
+      txId.value = "";
+      txType.value = "income";
+      txAmount.value = "";
+      txCategory.value = "";
+      txNote.value = "";
+      formStatusTx.textContent = "Creating new transaction";
+      btnSubmitTx.textContent = "Add";
+    }
+
+    function renderTxTable() {
+      txBody.innerHTML = "";
+      if (transactions.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 5;
+        td.style.textAlign = "center";
+        td.style.color = "#6b7280";
+        td.textContent = "No transactions yet. Add one above.";
+        tr.appendChild(td);
+        txBody.appendChild(tr);
+        return;
+      }
+
+      transactions.forEach(tx => {
+        const tr = document.createElement("tr");
+
+        const tdType = document.createElement("td");
+        const sType = document.createElement("span");
+        sType.textContent = tx.type === "income" ? "Income" : "Expense";
+        sType.className =
+          tx.type === "income" ? "type-pill-income" : "type-pill-expense";
+        tdType.appendChild(sType);
+
+        const tdAmount = document.createElement("td");
+        tdAmount.textContent = formatCurrency(tx.amount);
+
+        const tdCat = document.createElement("td");
+        tdCat.textContent = tx.category || "—";
+
+        const tdNote = document.createElement("td");
+        tdNote.textContent = tx.note || "—";
+
+        const tdActions = document.createElement("td");
+        tdActions.style.textAlign = "right";
+        const ra = document.createElement("div");
+        ra.className = "row-actions";
+
+        const edit = document.createElement("span");
+        edit.textContent = "Edit";
+        edit.className = "link";
+        edit.onclick = () => startEditTx(tx.id);
+
+        const del = document.createElement("span");
+        del.textContent = "Delete";
+        del.className = "link link-danger";
+        del.onclick = () => deleteTx(tx.id);
+
+        ra.appendChild(edit);
+        ra.appendChild(del);
+        tdActions.appendChild(ra);
+
+        tr.appendChild(tdType);
+        tr.appendChild(tdAmount);
+        tr.appendChild(tdCat);
+        tr.appendChild(tdNote);
+        tr.appendChild(tdActions);
+
+        txBody.appendChild(tr);
+      });
+    }
+
+    function recalcFromTransactions() {
+      const totalIncome = transactions
+        .filter(t => t.type === "income")
+        .reduce((s, t) => s + t.amount, 0);
+      const totalExpense = transactions
+        .filter(t => t.type === "expense")
+        .reduce((s, t) => s + t.amount, 0);
+      const saved = Math.max(totalIncome - totalExpense, 0);
+
+      const maxForBar = Math.max(totalIncome, totalExpense, saved, 1);
+      const scale = 100 / maxForBar;
+
+      barIncome.style.width = totalIncome * scale + "%";
+      barExpense.style.width = totalExpense * scale + "%";
+      barSaved.style.width = saved * scale + "%";
+
+      valIncome.textContent = formatCurrency(totalIncome);
+      valExpense.textContent = formatCurrency(totalExpense);
+      valSaved.textContent = formatCurrency(saved);
+
+      const balance = totalIncome - totalExpense;
+      heroBalance.textContent = formatCurrency(balance);
+      if (transactions.length === 0) {
+        heroChip.textContent = "No data yet";
+        badgeStatus.textContent = "Waiting";
+        badgeStatus.className = "badge";
+      } else {
+        heroChip.textContent =
+          balance >= 0 ? "In the green" : "Overspending detected";
+        badgeStatus.textContent =
+          balance >= 0 ? "Healthy" : "Review expenses";
+        badgeStatus.className =
+          "badge " + (balance >= 0 ? "badge-success" : "");
+      }
+
+      // Pie from expenses
+      const expenses = transactions.filter(t => t.type === "expense");
+      const totalE = expenses.reduce((s, t) => s + t.amount, 0);
+
+      let essentials = 0, lifestyle = 0, other = 0;
+      expenses.forEach(t => {
+        const cat = (t.category || "").toLowerCase();
+        if (cat.includes("rent") || cat.includes("food") || cat.includes("bill")) {
+          essentials += t.amount;
+        } else if (cat.includes("shop") || cat.includes("travel") || cat.includes("fun") || cat.includes("dining")) {
+          lifestyle += t.amount;
+        } else {
+          other += t.amount;
+        }
+      });
+
+      let ePct = 0, lPct = 0, oPct = 0;
+      if (totalE > 0) {
+        ePct = Math.round((essentials / totalE) * 100);
+        lPct = Math.round((lifestyle / totalE) * 100);
+        oPct = 100 - ePct - lPct;
+      }
+
+      pEssentials.textContent = ePct + "%";
+      pLifestyle.textContent = lPct + "%";
+      pOther.textContent = oPct + "%";
+      piePercent.textContent = totalE > 0 ? "100%" : "0%";
+
+      const eEnd = ePct;
+      const lEnd = eEnd + lPct;
+      pieChart.style.background = totalE === 0
+        ? "conic-gradient(#1f2937 0 100%)"
+        : `conic-gradient(#22c55e 0 ${eEnd}%, #f97316 ${eEnd}% ${lEnd}%, #38bdf8 ${lEnd}% 100%)`;
+    }
+
+    function addTx(type, amount, category, note) {
+      transactions.push({
+        id: generateId(),
+        type,
+        amount,
+        category,
+        note
+      });
+      saveArray(STORAGE_TX, transactions);
+      renderTxTable();
+      recalcFromTransactions();
+    }
+
+    function updateTx(id, type, amount, category, note) {
+      transactions = transactions.map(t =>
+        t.id === id ? { ...t, type, amount, category, note } : t
+      );
+      saveArray(STORAGE_TX, transactions);
+      renderTxTable();
+      recalcFromTransactions();
+    }
+
+    function deleteTx(id) {
+      transactions = transactions.filter(t => t.id !== id);
+      saveArray(STORAGE_TX, transactions);
+      resetTxForm();
+      renderTxTable();
+      recalcFromTransactions();
+    }
+
+    function startEditTx(id) {
+      const tx = transactions.find(t => t.id === id);
+      if (!tx) return;
+      editingTxId = id;
+      txId.value = id;
+      txType.value = tx.type;
+      txAmount.value = tx.amount;
+      txCategory.value = tx.category;
+      txNote.value = tx.note;
+      formStatusTx.textContent = "Editing transaction";
+      btnSubmitTx.textContent = "Update";
+    }
+
+    txForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const type = txType.value;
+      const amount = parseFloat(txAmount.value || "0");
+      const category = txCategory.value.trim();
+      const note = txNote.value.trim();
+      if (!amount || amount <= 0) {
+        alert("Please enter a positive amount.");
+        return;
+      }
+      if (editingTxId) {
+        updateTx(editingTxId, type, amount, category, note);
+      } else {
+        addTx(type, amount, category, note);
+      }
+      resetTxForm();
+    });
+
+    btnClearTx.addEventListener("click", () => {
+      if (!transactions.length) return;
+      if (!confirm("Clear all transactions?")) return;
+      transactions = [];
+      saveArray(STORAGE_TX, transactions);
+      resetTxForm();
+      renderTxTable();
+      recalcFromTransactions();
+    });
+
+    /* GOALS CRUD */
+    function resetGoalForm() {
+      editingGoalId = null;
+      goalId.value = "";
+      goalName.value = "";
+      goalTarget.value = "";
+      goalSaved.value = "";
+      formStatusGoal.textContent = "Creating new goal";
+      btnSubmitGoal.textContent = "Add goal";
+    }
+
+    function renderGoals() {
+      goalBody.innerHTML = "";
+      if (!goals.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 4;
+        td.style.textAlign = "center";
+        td.style.color = "#6b7280";
+        td.textContent = "No goals yet. Add one above.";
+        tr.appendChild(td);
+        goalBody.appendChild(tr);
+        return;
+      }
+
+      goals.forEach(g => {
+        const tr = document.createElement("tr");
+
+        const pct = g.target > 0 ? Math.round((g.saved / g.target) * 100) : 0;
+        const clamped = Math.max(0, Math.min(100, pct));
+
+        const tdName = document.createElement("td");
+        tdName.textContent = g.name || "Untitled goal";
+
+        const tdAmounts = document.createElement("td");
+        tdAmounts.textContent = `${formatCurrency(g.saved)} / ${formatCurrency(g.target)}`;
+
+        const tdProg = document.createElement("td");
+        const wrap = document.createElement("div");
+        const label = document.createElement("div");
+        label.style.fontSize = "11px";
+        label.style.color = "#9ca3af";
+        label.textContent = clamped + "%";
+        const track = document.createElement("div");
+        track.className = "goal-progress-track";
+        const fill = document.createElement("div");
+        fill.className = "goal-progress-fill";
+        fill.style.width = clamped + "%";
+        track.appendChild(fill);
+        wrap.appendChild(label);
+        wrap.appendChild(track);
+        tdProg.appendChild(wrap);
+
+        const tdActions = document.createElement("td");
+        tdActions.style.textAlign = "right";
+        const ra = document.createElement("div");
+        ra.className = "row-actions";
+
+        const edit = document.createElement("span");
+        edit.textContent = "Edit";
+        edit.className = "link";
+        edit.onclick = () => startEditGoal(g.id);
+
+        const del = document.createElement("span");
+        del.textContent = "Delete";
+        del.className = "link link-danger";
+        del.onclick = () => deleteGoal(g.id);
+
+        ra.appendChild(edit);
+        ra.appendChild(del);
+        tdActions.appendChild(ra);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdAmounts);
+        tr.appendChild(tdProg);
+        tr.appendChild(tdActions);
+
+        goalBody.appendChild(tr);
+      });
+    }
+
+    function addGoal(name, target, saved) {
+      goals.push({
+        id: generateId(),
+        name,
+        target,
+        saved
+      });
+      saveArray(STORAGE_GOAL, goals);
+      renderGoals();
+    }
+
+    function updateGoal(id, name, target, saved) {
+      goals = goals.map(g =>
+        g.id === id ? { ...g, name, target, saved } : g
+      );
+      saveArray(STORAGE_GOAL, goals);
+      renderGoals();
+    }
+
+    function deleteGoal(id) {
+      goals = goals.filter(g => g.id !== id);
+      saveArray(STORAGE_GOAL, goals);
+      resetGoalForm();
+      renderGoals();
+    }
+
+    function startEditGoal(id) {
+      const g = goals.find(x => x.id === id);
+      if (!g) return;
+      editingGoalId = id;
+      goalId.value = id;
+      goalName.value = g.name;
+      goalTarget.value = g.target;
+      goalSaved.value = g.saved;
+      formStatusGoal.textContent = "Editing goal";
+      btnSubmitGoal.textContent = "Update goal";
+    }
+
+    goalForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const name = goalName.value.trim();
+      const target = parseFloat(goalTarget.value || "0");
+      const saved = parseFloat(goalSaved.value || "0");
+      if (!name) {
+        alert("Goal name is required.");
+        return;
+      }
+      if (target <= 0) {
+        alert("Target must be greater than 0.");
+        return;
+      }
+      if (saved < 0) {
+        alert("Saved amount cannot be negative.");
+        return;
+      }
+      if (editingGoalId) {
+        updateGoal(editingGoalId, name, target, saved);
+      } else {
+        addGoal(name, target, saved);
+      }
+      resetGoalForm();
+    });
+
+    btnClearGoals.addEventListener("click", () => {
+      if (!goals.length) return;
+      if (!confirm("Clear all goals?")) return;
+      goals = [];
+      saveArray(STORAGE_GOAL, goals);
+      resetGoalForm();
+      renderGoals();
+    });
+
+    /* FUTURE CRUD */
+    function resetFutureForm() {
+      editingFutureId = null;
+      futureId.value = "";
+      futureLabel.value = "";
+      futureAmount.value = "";
+      futureTrend.value = "";
+      formStatusFuture.textContent = "Creating new future card";
+      btnSubmitFuture.textContent = "Add card";
+    }
+
+    function renderFutures() {
+      futureGrid.innerHTML = "";
+      if (!futures.length) {
+        const p = document.createElement("p");
+        p.style.fontSize = "11px";
+        p.style.color = "#9ca3af";
+        p.textContent = "No future cards yet. Add projections above.";
+        futureGrid.appendChild(p);
+        return;
+      }
+
+      futures.forEach(f => {
+        const card = document.createElement("div");
+        card.className = "mini";
+
+        const label = document.createElement("div");
+        label.className = "mini-label";
+        label.textContent = f.label || "Untitled";
+
+        const value = document.createElement("div");
+        value.className = "mini-value";
+        value.textContent = formatCurrency(f.amount);
+
+        const trend = document.createElement("span");
+        trend.className = "pill-trend";
+        if ((f.trend || "").toLowerCase().includes("-")) {
+          trend.classList.add("pill-trend-down");
+        }
+        trend.textContent = f.trend || "No note";
+
+        const actions = document.createElement("div");
+        actions.className = "row-actions";
+        actions.style.marginTop = "4px";
+
+        const edit = document.createElement("span");
+        edit.textContent = "Edit";
+        edit.className = "link";
+        edit.onclick = () => startEditFuture(f.id);
+
+        const del = document.createElement("span");
+        del.textContent = "Delete";
+        del.className = "link link-danger";
+        del.onclick = () => deleteFuture(f.id);
+
+        actions.appendChild(edit);
+        actions.appendChild(del);
+
+        card.appendChild(label);
+        card.appendChild(value);
+        card.appendChild(trend);
+        card.appendChild(actions);
+
+        futureGrid.appendChild(card);
+      });
+    }
+
+    function addFuture(label, amount, trend) {
+      futures.push({
+        id: generateId(),
+        label,
+        amount,
+        trend
+      });
+      saveArray(STORAGE_FUTURE, futures);
+      renderFutures();
+    }
+
+    function updateFuture(id, label, amount, trend) {
+      futures = futures.map(f =>
+        f.id === id ? { ...f, label, amount, trend } : f
+      );
+      saveArray(STORAGE_FUTURE, futures);
+      renderFutures();
+    }
+
+    function deleteFuture(id) {
+      futures = futures.filter(f => f.id !== id);
+      saveArray(STORAGE_FUTURE, futures);
+      resetFutureForm();
+      renderFutures();
+    }
+
+    function startEditFuture(id) {
+      const f = futures.find(x => x.id === id);
+      if (!f) return;
+      editingFutureId = id;
+      futureId.value = id;
+      futureLabel.value = f.label;
+      futureAmount.value = f.amount;
+      futureTrend.value = f.trend;
+      formStatusFuture.textContent = "Editing future card";
+      btnSubmitFuture.textContent = "Update card";
+    }
+
+    futureForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const label = futureLabel.value.trim();
+      const amount = parseFloat(futureAmount.value || "0");
+      const trend = futureTrend.value.trim();
+      if (!label) {
+        alert("Label is required.");
+        return;
+      }
+      if (amount < 0) {
+        alert("Amount cannot be negative.");
+        return;
+      }
+      if (editingFutureId) {
+        updateFuture(editingFutureId, label, amount, trend);
+      } else {
+        addFuture(label, amount, trend);
+      }
+      resetFutureForm();
+    });
+
+    btnClearFuture.addEventListener("click", () => {
+      if (!futures.length) return;
+      if (!confirm("Clear all future cards?")) return;
+      futures = [];
+      saveArray(STORAGE_FUTURE, futures);
+      resetFutureForm();
+      renderFutures();
+    });
+
+    /* INITIAL RENDER */
+    renderTxTable();
+    recalcFromTransactions();
+    renderGoals();
+    renderFutures();
+  </script>
+</body>
+</html>
