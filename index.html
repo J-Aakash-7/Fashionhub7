@@ -1,117 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elite Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background: radial-gradient(circle at top,#1a1a2e,#0f3460,#16213e);color:#fff;overflow-x:hidden}
-header{padding:30px;text-align:center;font-size:32px;font-weight:600;letter-spacing:2px;background:rgba(255,255,255,0.05);backdrop-filter:blur(10px)}
-.hero{text-align:center;padding:40px 20px}
-.hero h1{font-size:40px;margin-bottom:10px}
-.hero p{opacity:0.7}
-.container{padding:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
-.card{background:rgba(255,255,255,0.08);border-radius:20px;backdrop-filter:blur(15px);box-shadow:0 8px 30px rgba(0,0,0,0.4);overflow:hidden;transition:0.4s}
-.card:hover{transform:scale(1.05)}
-.card img{width:100%;height:180px;object-fit:cover;cursor:pointer}
-.card-content{padding:15px}
-.price{color:#00f5d4;font-weight:600;margin-bottom:10px}
-.badge{position:absolute;top:10px;left:10px;background:linear-gradient(135deg,#ff512f,#dd2476);padding:5px 10px;border-radius:10px;font-size:12px}
-.btn{width:100%;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,#00c6ff,#0072ff);color:#fff;cursor:pointer}
-.btn:hover{background:linear-gradient(135deg,#ff512f,#dd2476)}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);justify-content:center;align-items:center}
-.modal-content{background:#fff;color:#000;padding:20px;border-radius:15px;width:90%;max-width:500px}
-.close{float:right;font-size:22px;cursor:pointer}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surekha's boutique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        
+        /* REAL IMAGE BACKGROUND */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+        }
 
-/* Image Preview */
-.image-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);justify-content:center;align-items:center}
-.image-modal img{max-width:90%;max-height:90%;border-radius:15px}
-</style>
+        header { 
+            padding: 25px; 
+            text-align: center; 
+            font-size: 30px; 
+            font-weight: 700; 
+            letter-spacing: 6px; 
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .hero { text-align: center; padding: 50px 20px; }
+        .hero h1 { font-size: 40px; margin-bottom: 10px; color: #00f5d4; }
+        .hero p { opacity: 0.8; font-weight: 300; letter-spacing: 1px; }
+
+        /* Category Filter */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+        .cat-btn {
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .cat-btn.active, .cat-btn:hover {
+            background: #00f5d4;
+            color: #000;
+            border-color: #00f5d4;
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.4);
+        }
+
+        /* Grid System */
+        .container { padding: 0 20px 80px; max-width: 1200px; margin: 0 auto; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 30px; 
+        }
+
+        /* Product Cards */
+        .card { 
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden; 
+            transition: 0.4s ease;
+            position: relative;
+        }
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-color: #00f5d4;
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .card img { width: 100%; height: 320px; object-fit: cover; cursor: zoom-in; }
+        .card-content { padding: 20px; text-align: center; }
+        
+        .price { font-size: 20px; color: #00f5d4; font-weight: 700; margin-bottom: 15px; }
+        .badge { 
+            position: absolute; top: 12px; left: 12px; 
+            background: #00f5d4; color: #000;
+            padding: 4px 10px; font-size: 10px; font-weight: 800;
+            border-radius: 2px; text-transform: uppercase;
+        }
+
+        /* Buttons */
+        .btn { 
+            width: 100%; padding: 14px; border: 1px solid #00f5d4; 
+            background: transparent; color: #00f5d4; 
+            cursor: pointer; font-weight: 700; text-transform: uppercase;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+        .btn:hover { background: #00f5d4; color: #000; }
+
+        /* Modals */
+        .modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content { background: #fff; padding: 30px; border-radius: 8px; width: 95%; max-width: 500px; position: relative; }
+        .close { position: absolute; right: 15px; top: 10px; font-size: 30px; cursor: pointer; color: #000; }
+
+        .image-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 2000;
+        }
+        .image-modal img { max-width: 90%; max-height: 85%; border: 3px solid #00f5d4; }
+
+        .floating-contact {
+            position: fixed; bottom: 25px; right: 25px; 
+            background: #00f5d4; color: #000; padding: 12px 20px; 
+            font-size: 12px; font-weight: 800; border-radius: 4px; z-index: 500;
+        }
+    </style>
 </head>
 <body>
 
-<header>Fashion hub</header>
+<header>Fashion Hub</header>
 
 <div class="hero">
-<h1>Best quality, Affordable price</h1>
-<p>Customer satisfaction is the primary goal</p>
+    <h1>ONE STOP COLLEGE WEAR</h1>
+    <p>Premium Quality Dresses </p>
+</div>
+
+<div class="categories">
+    <button class="cat-btn active" onclick="filterProducts('All', this)">All Items</button>
+    <button class="cat-btn" onclick="filterProducts('Short Kurtha', this)">Short Kurtha</button>
+    <button class="cat-btn" onclick="filterProducts('Formal', this)">Formal</button>
+    <button class="cat-btn" onclick="filterProducts('Ethnic', this)">Ethnic</button>
 </div>
 
 <div class="container">
-<div class="grid" id="productList"></div>
+    <div class="grid" id="productList"></div>
 </div>
 
-<!-- Buy Modal -->
 <div class="modal" id="buyModal">
-<div class="modal-content">
-<span class="close" onclick="closeModal()">&times;</span>
-<h3>Complete Your Order</h3>
-<iframe src="https://forms.gle/m7EyyPzhoYuJu6Nr9" width="100%" height="350"></iframe>
-</div>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 style="color:#000; margin-bottom:20px; text-align:center;">Order Form</h3>
+        <iframe src="https://forms.gle/m7EyyPzhoYuJu6Nr9" width="100%" height="400" frameborder="0">Loading…</iframe>
+    </div>
 </div>
 
-<!-- Image Preview Modal -->
 <div class="image-modal" id="imageModal" onclick="closeImage()">
-<img id="previewImg">
+    <img id="previewImg" src="">
 </div>
 
-<footer style="text-align:center;padding:20px;opacity:0.6">© 2026 Elite Store | Designed by Aakash</footer>
-
-<!-- Floating Contact -->
-<div style="position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.7);color:#fff;padding:10px 15px;border-radius:10px;font-size:14px;box-shadow:0 4px 15px rgba(0,0,0,0.4);backdrop-filter:blur(5px);">
-  📞For contact : 8610328602
-      
+<div class="floating-contact">
+    📞 Contact: 8610328602
 </div>
 
-<!-- Contact Modal -->
-<div class="modal" id="contactModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeContact()">&times;</span>
-    <h3>Contact Us</h3>
-    <p><strong>Phone:</strong> 8610328602</p>
-    <p><strong>Email:</strong> aakashjkmr@gmail.com</p>
-  </div>
-</div>
+<footer style="text-align:center; padding:50px; opacity:0.5; font-size:11px; letter-spacing:3px;">
+    © 2026 ELITE STORE | DESIGNED BY AAKASH
+</footer>
 
 <script>
-let products=[
-{name:"Short kurtha code-100",price:500,image:"image/sk.jpg"},
-{name:"Short kurtha code-101",price:2999,image:"image/1.jpg"},
-{name:"Short kurtha code-102",price:1499,image:"image/2.jpg"},
-{name:"Short kurtha code-103",price:899,image:"image/4.jpg"}
-];
+    // Product Database with your image paths
+    const products = [
+        { name: "Short Kurtha Code-100", price: 500, image: "image/sk.jpg", category: "Short Kurtha" },
+        { name: "Premium Kurtha 101", price: 2999, image: "image/1.jpg", category: "Short Kurtha" },
+        { name: "Formal Fit 102", price: 1499, image: "image/2.jpg", category: "Formal" },
+        { name: "Ethnic Special 103", price: 899, image: "image/4.jpg", category: "Ethnic" }
+    ];
 
-function renderProducts(){
-  let list=document.getElementById("productList");
-  list.innerHTML="";
-  products.forEach(p=>{
-    list.innerHTML+=`
-    <div class="card">
-      <img src="${p.image}" onclick="previewImage('${p.image}')">
-      <div class="card-content">
-        <h3>${p.name}</h3>
-        <div class="price">₹${p.price}</div>
-        <button class="btn" onclick="buyNow()">Buy Now</button>
-      </div>
-    </div>`;
-  });
-}
+    function renderProducts(filterValue = "All") {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = "";
+        
+        const filtered = filterValue === "All" ? products : products.filter(p => p.category === filterValue);
 
-function previewImage(src){
-  document.getElementById("previewImg").src=src;
-  document.getElementById("imageModal").style.display="flex";
-}
-function closeImage(){
-  document.getElementById("imageModal").style.display="none";
-}
+        filtered.forEach(p => {
+            productList.innerHTML += `
+            <div class="card">
+                <div class="badge">${p.category}</div>
+                <img src="${p.image}" onclick="previewImage('${p.image}')" alt="${p.name}">
+                <div class="card-content">
+                    <h3 style="margin-bottom: 10px; font-weight: 400;">${p.name}</h3>
+                    <div class="price">₹${p.price}</div>
+                    <button class="btn" onclick="buyNow()">Buy Now</button>
+                </div>
+            </div>`;
+        });
+    }
 
-function buyNow(){document.getElementById("buyModal").style.display="flex"}
-function closeModal(){document.getElementById("buyModal").style.display="none"}
+    function filterProducts(category, buttonElement) {
+        document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+        buttonElement.classList.add('active');
+        renderProducts(category);
+    }
 
-renderProducts();
+    function previewImage(imagePath) {
+        document.getElementById("previewImg").src = imagePath;
+        document.getElementById("imageModal").style.display = "flex";
+    }
+    function closeImage() { document.getElementById("imageModal").style.display = "none"; }
+    function buyNow() { document.getElementById("buyModal").style.display = "flex"; }
+    function closeModal() { document.getElementById("buyModal").style.display = "none"; }
+
+    window.onload = () => renderProducts();
 </script>
 
 </body>
