@@ -26,7 +26,7 @@
         }
 
         /* Brand Section */
-        .brand-section { text-align: center; padding: 60px 20px 20px; }
+        .brand-section { text-align: center; padding: 60px 20px 20px; position: relative; }
         .brand-section .main-logo {
             width: 100px; height: auto; margin-bottom: 15px;
             filter: drop-shadow(0 0 15px rgba(0,245,212,0.5));
@@ -34,6 +34,21 @@
         .brand-section h2 { 
             font-family: 'Playfair Display', serif; font-size: 32px; 
             letter-spacing: 2px;
+        }
+
+        /* Track Order Header Button */
+        .track-header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         /* Search & Filter Container */
@@ -138,11 +153,25 @@
             background: var(--primary); color: #000; padding: 12px 20px; 
             font-size: 11px; font-weight: 800; border-radius: 4px; text-decoration: none;
         }
+
+        /* Track Order Footer */
+        .track-footer-container { text-align: center; padding: 40px 20px 100px; }
+        .track-btn-large {
+            display: inline-block;
+            padding: 15px 30px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
 <div class="brand-section">
+    <a href="https://wa.me/918610328602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-header">Track Order</a>
     <img src="logo.png" class="main-logo" alt="Logo">
     <h2>Lina Bella</h2>
 </div>
@@ -160,6 +189,10 @@
 
 <div class="container">
     <div class="grid" id="productList"></div>
+</div>
+
+<div class="track-footer-container">
+    <a href="https://wa.me/918610328602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-btn-large">🚚 TRACK MY ORDER</a>
 </div>
 
 <div class="modal" id="orderModal">
