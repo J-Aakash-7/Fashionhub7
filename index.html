@@ -6,12 +6,10 @@
     <title>Lina Bella Boutique | College Wear</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for easy color changes */
         :root {
-            --primary: #00f5d4; /* Teal accent */
+            --primary: #00f5d4; 
             --bg-overlay: rgba(0, 0, 0, 0.75);
             --card-bg: rgba(255, 255, 255, 0.08);
-            --modal-bg: #fff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,61 +25,57 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* --- CREATIVE LOGO INTEGRATION --- */
-        .brand-section {
-            text-align: center;
-            padding: 80px 20px 50px; /* More top padding for breathing room */
-            position: relative;
-        }
-
+        /* Brand Section */
+        .brand-section { text-align: center; padding: 60px 20px 20px; }
         .brand-section .main-logo {
-            width: 140px; /* Adjust size based on your logo design */
-            height: auto;
-            margin-bottom: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            /* Creative glow effect helps the logo integrate */
+            width: 100px; height: auto; margin-bottom: 15px;
             filter: drop-shadow(0 0 15px rgba(0,245,212,0.5));
-            transition: 0.5s ease;
         }
-        
-        /* Subtle hover animation on the logo */
-        .brand-section .main-logo:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
-
         .brand-section h2 { 
-            font-family: 'Playfair Display', serif; /* Elegant font for name */
-            font-size: 32px; 
-            font-weight: 700;
-            color: #fff; 
+            font-family: 'Playfair Display', serif; font-size: 32px; 
             letter-spacing: 2px;
-            margin-bottom: 20px;
         }
-        
-        .hero { text-align: center; margin-bottom: 60px; }
-        .hero h1 { font-size: 26px; font-weight: 400; margin-bottom: 10px; color: var(--primary); letter-spacing: 5px; }
-        .hero p { opacity: 0.8; font-weight: 300; letter-spacing: 1px; }
 
-        /* --- CATEGORIES & GRID --- */
+        /* Search & Filter Container */
+        .controls-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
+        }
+
         .categories {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 50px;
+            gap: 8px;
             flex-wrap: wrap;
-            padding: 0 10px;
         }
         .cat-btn {
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 20px;
             font-size: 11px;
-            letter-spacing: 1px;
             text-transform: uppercase;
             transition: 0.3s;
         }
@@ -89,257 +83,177 @@
             background: var(--primary);
             color: #000;
             border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
         }
 
+        /* Grid & Cards */
         .container { padding: 0 20px 80px; max-width: 1200px; margin: 0 auto; }
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            opacity: 0.5;
         }
 
-        /* --- PRODUCT CARDS --- */
         .card { 
-            background: var(--card-bg); 
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            overflow: hidden; 
-            transition: 0.4s ease;
-            position: relative;
+            background: var(--card-bg); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px;
+            overflow: hidden; transition: 0.4s ease; position: relative;
         }
-        .card:hover { 
-            transform: translateY(-8px); 
-            border-color: var(--primary);
-        }
-        
-        .card img { width: 100%; height: 320px; object-fit: cover; cursor: zoom-in; }
+        .card img { width: 100%; height: 350px; object-fit: cover; }
         .card-content { padding: 20px; text-align: center; }
-        .price { font-size: 22px; color: var(--primary); font-weight: 700; margin-bottom: 15px; }
-        
-        .badge { 
-            position: absolute; top: 12px; left: 12px; 
-            background: var(--primary); color: #000;
-            padding: 4px 10px; font-size: 10px; font-weight: 800;
-            border-radius: 2px; text-transform: uppercase;
-        }
+        .price { font-size: 20px; color: var(--primary); font-weight: 700; margin-bottom: 15px; }
 
         .btn { 
-            width: 100%; padding: 14px; border: 1px solid var(--primary); 
+            width: 100%; padding: 12px; border: 1px solid var(--primary); 
             background: transparent; color: var(--primary); 
-            cursor: pointer; font-weight: 700; text-transform: uppercase;
-            transition: 0.3s;
-            border-radius: 4px;
+            cursor: pointer; font-weight: 700; text-transform: uppercase; border-radius: 4px;
         }
         .btn:hover { background: var(--primary); color: #000; }
 
-        /* --- MODALS --- */
+        /* Order Modal */
         .modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 2000;
         }
-        
-        /* New Order Selector Modal Styling */
         .order-modal-content {
-            background: var(--modal-bg);
-            padding: 30px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-            color: #000;
-            text-align: center;
+            background: #fff; padding: 30px; border-radius: 12px;
+            width: 90%; max-width: 400px; color: #000; text-align: center; position: relative;
         }
-        .close { position: absolute; right: 15px; top: 10px; font-size: 30px; cursor: pointer; color: #aaa; }
-        .order-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 25px;
+        .size-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0; }
+        .size-chip {
+            padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;
+            cursor: pointer; font-size: 12px; font-weight: 700;
         }
-        .method-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 700;
-            text-transform: uppercase;
-            transition: 0.3s;
-            font-size: 13px;
-            text-decoration: none;
-        }
-        .method-btn.form {
-            background: #f1f1f1;
-            color: #333;
-            border: 1px solid #ccc;
-        }
-        .method-btn.form:hover { background: #e0e0e0; }
-        
-        .method-btn.wa {
-            background: #25D366; /* WhatsApp Green */
-            color: #fff;
-            border: 1px solid #1a9e4d;
-        }
-        .method-btn.wa:hover { background: #20b958; }
+        .size-chip.selected { background: #000; color: #fff; border-color: #000; }
+        .order-options { display: flex; flex-direction: column; gap: 10px; opacity: 0.2; pointer-events: none; }
+        .order-options.active { opacity: 1; pointer-events: auto; }
+        .method-btn { padding: 14px; border-radius: 4px; font-weight: 700; text-decoration: none; display: block; }
+        .method-btn.wa { background: #25D366; color: #fff; }
+        .close { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #999; }
 
-        /* Image Preview Modal */
-        .image-modal img { max-width: 90%; max-height: 85%; border: 2px solid var(--primary); }
-
-        /* --- FLOATING CONTACT --- */
         .floating-contact {
             position: fixed; bottom: 25px; right: 25px; 
             background: var(--primary); color: #000; padding: 12px 20px; 
-            font-size: 11px; font-weight: 800; border-radius: 4px; z-index: 500;
-            text-decoration: none;
-        }
-
-        /* --- RESPONSIVE ADJUSTMENTS --- */
-        @media (max-width: 600px) {
-            .brand-section .main-logo { width: 100px; }
-            .brand-section h2 { font-size: 24px; }
-            .hero h1 { font-size: 18px; letter-spacing: 3px; }
-            .hero { margin-bottom: 40px; }
+            font-size: 11px; font-weight: 800; border-radius: 4px; text-decoration: none;
         }
     </style>
 </head>
 <body>
 
 <div class="brand-section">
-    <img src="logo.png" class="main-logo" alt="Lina Bella Boutique Logo">
+    <img src="lina-bella-logo.png" class="main-logo" alt="Logo">
     <h2>Lina Bella</h2>
-    <p>Premium Quality Dresses</p>
 </div>
 
-<div class="hero">
-    <h1>ONE STOP COLLEGE WEAR</h1>
-    <p>PREMIUM SHORT KURTHAS, FORMALS, & ETHNIC WEAR</p>
-</div>
-
-<div class="categories">
-    <button class="cat-btn active" onclick="filterProducts('All', this)">All Items</button>
-    <button class="cat-btn" onclick="filterProducts('Short Kurtha', this)">Short Kurtha</button>
-    <button class="cat-btn" onclick="filterProducts('Formal', this)">Formal</button>
-    <button class="cat-btn" onclick="filterProducts('Ethnic', this)">Ethnic</button>
+<div class="controls-container">
+    <input type="text" id="searchInput" class="search-box" placeholder="Search by name, code, or style..." onkeyup="filterAll()">
+    
+    <div class="categories">
+        <button class="cat-btn active" onclick="setCategory('All', this)">All</button>
+        <button class="cat-btn" onclick="setCategory('Short Kurtha', this)">Short Kurtha</button>
+        <button class="cat-btn" onclick="setCategory('Formal', this)">Formal</button>
+        <button class="cat-btn" onclick="setCategory('Ethnic', this)">Ethnic</button>
+    </div>
 </div>
 
 <div class="container">
     <div class="grid" id="productList"></div>
 </div>
 
-<div class="image-modal modal" id="imageModal" onclick="closeImage()">
-    <img id="previewImg" src="">
-</div>
-
-<div class="order-modal modal" id="orderModal">
+<div class="modal" id="orderModal">
     <div class="order-modal-content">
         <span class="close" onclick="closeOrderModal()">&times;</span>
-        <h3>Place Your Order</h3>
-        <p style="opacity: 0.6; font-size: 13px; margin-top: 10px;">Select how you want to complete your order:</p>
-        
-        <div class="order-options">
-            <a href="https://wa.me/918610328602?text=I'd like to order a product!" target="_blank" class="method-btn wa" id="waLink">
-                📱 Order via WhatsApp (Fastest)
-            </a>
-            
-            <a href="https://forms.gle/m7EyyPzhoYuJu6Nr9" target="_blank" class="method-btn form" id="formLink">
-                📝 Order via Google Form
-            </a>
-        }
+        <h3 id="modalProdName">Product Name</h3>
+        <div class="size-container">
+            <div class="size-chip" onclick="selectSize('XS', this)">XS</div>
+            <div class="size-chip" onclick="selectSize('S', this)">S</div>
+            <div class="size-chip" onclick="selectSize('M', this)">M</div>
+            <div class="size-chip" onclick="selectSize('L', this)">L</div>
+            <div class="size-chip" onclick="selectSize('XL', this)">XL</div>
+            <div class="size-chip" onclick="selectSize('XXL', this)">XXL</div>
+        </div>
+        <div class="order-options" id="orderActions">
+            <a href="#" target="_blank" class="method-btn wa" id="waLink">📱 Order via WhatsApp</a>
         </div>
     </div>
 </div>
 
-<a href="tel:8610328602" class="floating-contact">
-    📞 CALL: 8610328602
-</a>
-
-<footer style="text-align:center; padding:50px; opacity:0.5; font-size:11px; letter-spacing:3px; margin-top:100px;">
-    © 2026 ELITE STORE | DESIGNED BY AAKASH
-</footer>
+<a href="tel:8610328602" class="floating-contact">📞 CALL: 8610328602</a>
 
 <script>
-    // Configuration
-    const whatsappNumber = "918610328602"; // 91 is India country code
-    const googleFormLink = "https://forms.gle/m7EyyPzhoYuJu6Nr9";
+    const whatsappNumber = "918610328602";
+    let currentCategory = "All";
+    let selectedSize = "";
+    let currentProduct = {};
 
     const products = [
-        { id: "100", name: "Short Kurtha Code-100", price: 500, image: "image/sk.jpg", category: "Short Kurtha" },
-        { id: "101", name: "Premium Kurtha 101", price: 2999, image: "image/1.jpg", category: "Short Kurtha" },
-        { id: "102", name: "Formal Fit 102", price: 1499, image: "image/2.jpg", category: "Formal" },
-        { id: "103", name: "Ethnic Special 103", price: 899, image: "image/4.jpg", category: "Ethnic" },
-        { id: "104", name: "Ethnic Special 104", price: 899, image: "image/3.jpg", category: "Ethnic" },
-        { id: "105", name: "Ethnic Special 105", price: 899, image: "image/5.jpg", category: "Ethnic" },
-        { id: "106", name: "Ethnic Special 106", price: 899, image: "image/6.jpg", category: "Ethnic" }
+        { id: "100", name: "Floral Short Kurtha", price: 500, image: "image/sk.jpg", category: "Short Kurtha" },
+        { id: "101", name: "Premium Blue Kurtha", price: 2999, image: "image/1.jpg", category: "Short Kurtha" },
+        { id: "102", name: "White Formal Shirt", price: 1499, image: "image/2.jpg", category: "Formal" },
+        { id: "103", name: "Ethnic Red Special", price: 899, image: "image/4.jpg", category: "Ethnic" }
     ];
 
-    function renderProducts(filterValue = "All") {
+    function filterAll() {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
         const productList = document.getElementById("productList");
         productList.innerHTML = "";
-        
-        const filtered = filterValue === "All" ? products : products.filter(p => p.category === filterValue);
+
+        const filtered = products.filter(p => {
+            const matchesCategory = currentCategory === "All" || p.category === currentCategory;
+            const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
+                                 p.id.toLowerCase().includes(searchTerm) ||
+                                 p.category.toLowerCase().includes(searchTerm);
+            return matchesCategory && matchesSearch;
+        });
+
+        if (filtered.length === 0) {
+            productList.innerHTML = `<div class="no-results">No items found for "${searchTerm}"</div>`;
+            return;
+        }
 
         filtered.forEach(p => {
-            // Updated with id and specific parameters to handle order selection
             productList.innerHTML += `
             <div class="card">
-                <div class="badge">${p.category}</div>
-                <img src="${p.image}" onclick="previewImage('${p.image}')" alt="${p.name}">
+                <img src="${p.image}" alt="${p.name}">
                 <div class="card-content">
-                    <h3 style="margin-bottom: 10px; font-weight: 400;">${p.name}</h3>
+                    <h3>${p.name}</h3>
                     <div class="price">₹${p.price}</div>
-                    <button class="btn" onclick="buyNow('${p.id}', '${p.name}', '${p.price}')">Buy Now</button>
+                    <button class="btn" onclick="openOrderModal('${p.id}', '${p.name}', '${p.price}')">Buy Now</button>
                 </div>
             </div>`;
         });
     }
 
-    function filterProducts(category, buttonElement) {
-        document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-        buttonElement.classList.add('active');
-        renderProducts(category);
+    function setCategory(cat, btn) {
+        currentCategory = cat;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterAll();
     }
 
-    function previewImage(imagePath) {
-        document.getElementById("previewImg").src = imagePath;
-        document.getElementById("imageModal").style.display = "flex";
-    }
-
-    function closeImage() { 
-        document.getElementById("imageModal").style.display = "none"; 
-    }
-
-    // Opens the order selection modal and configures links for the specific product
-    function buyNow(productId, productName, productPrice) { 
-        // 1. WhatsApp link: create pre-filled message
-        const message = `Hello, I'd like to order from Lina Bella:\n\n*Product:* ${productName}\n*Code:* ${productId}\n*Price:* ₹${productPrice}`;
-        const encodedMessage = encodeURIComponent(message);
-        document.getElementById("waLink").href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-        
-        // 2. Google Form link: (remains the same unless you pre-fill form fields)
-        document.getElementById("formLink").href = googleFormLink;
-        
-        // 3. Open Modal
+    function openOrderModal(id, name, price) {
+        currentProduct = { id, name, price };
+        selectedSize = "";
+        document.getElementById("modalProdName").innerText = name;
+        document.getElementById("orderActions").classList.remove('active');
+        document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('selected'));
         document.getElementById("orderModal").style.display = "flex";
     }
 
-    function closeOrderModal() { 
-        document.getElementById("orderModal").style.display = "none"; 
+    function selectSize(size, element) {
+        selectedSize = size;
+        document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById("orderActions").classList.add('active');
+        const message = `Order Request:\nItem: ${currentProduct.name}\nCode: ${currentProduct.id}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}`;
+        document.getElementById("waLink").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     }
 
-    // Close modal when clicking outside content area
-    window.onclick = function(event) {
-        const orderModal = document.getElementById("orderModal");
-        const imageModal = document.getElementById("imageModal");
-        if (event.target === orderModal) { closeOrderModal(); }
-        if (event.target === imageModal) { closeImage(); }
-    }
+    function closeOrderModal() { document.getElementById("orderModal").style.display = "none"; }
 
-    window.onload = () => renderProducts();
+    window.onload = filterAll;
 </script>
-
 </body>
 </html>
