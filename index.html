@@ -36,85 +36,38 @@
             letter-spacing: 2px;
         }
 
-        /* Track Order Header Button */
         .track-header {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 8px 15px;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            text-decoration: none;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
+            position: absolute; top: 20px; right: 20px;
+            padding: 8px 15px; border: 1px solid var(--primary);
+            color: var(--primary); text-decoration: none;
+            border-radius: 20px; font-size: 10px; font-weight: 700;
             text-transform: uppercase;
         }
 
-        /* Search & Filter Container */
-        .controls-container {
-            max-width: 600px;
-            margin: 0 auto 40px;
-            padding: 0 20px;
-            text-align: center;
-        }
-
+        /* Search & Filter */
+        .controls-container { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; text-align: center; }
         .search-box {
-            width: 100%;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            color: #fff;
-            font-size: 14px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 15px 25px; background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px;
+            color: #fff; font-size: 14px; margin-bottom: 20px; outline: none; transition: 0.3s;
         }
-        .search-box:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
-        }
+        .search-box:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 245, 212, 0.2); }
 
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .categories { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .cat-btn {
-            padding: 8px 15px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            cursor: pointer;
-            border-radius: 20px;
-            font-size: 11px;
-            text-transform: uppercase;
-            transition: 0.3s;
+            padding: 8px 15px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; cursor: pointer; border-radius: 20px; font-size: 11px; text-transform: uppercase; transition: 0.3s;
         }
-        .cat-btn.active, .cat-btn:hover {
-            background: var(--primary);
-            color: #000;
-            border-color: var(--primary);
-        }
+        .cat-btn.active, .cat-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
 
-        /* Grid & Cards */
-        .container { padding: 0 20px 80px; max-width: 1200px; margin: 0 auto; }
+        /* Grid */
+        .container { padding: 0 20px 50px; max-width: 1200px; margin: 0 auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 50px;
-            opacity: 0.5;
-        }
-
         .card { 
             background: var(--card-bg); backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px;
-            overflow: hidden; transition: 0.4s ease; position: relative;
+            overflow: hidden; transition: 0.4s ease;
         }
         .card img { width: 100%; height: 350px; object-fit: cover; }
         .card-content { padding: 20px; text-align: center; }
@@ -127,7 +80,7 @@
         }
         .btn:hover { background: var(--primary); color: #000; }
 
-        /* Order Modal */
+        /* Modals */
         .modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 2000;
@@ -137,35 +90,23 @@
             width: 90%; max-width: 400px; color: #000; text-align: center; position: relative;
         }
         .size-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0; }
-        .size-chip {
-            padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;
-            cursor: pointer; font-size: 12px; font-weight: 700;
-        }
+        .size-chip { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; }
         .size-chip.selected { background: #000; color: #fff; border-color: #000; }
+        
         .order-options { display: flex; flex-direction: column; gap: 10px; opacity: 0.2; pointer-events: none; }
         .order-options.active { opacity: 1; pointer-events: auto; }
         .method-btn { padding: 14px; border-radius: 4px; font-weight: 700; text-decoration: none; display: block; }
         .method-btn.wa { background: #25D366; color: #fff; }
         .close { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #999; }
 
-        .floating-contact {
-            position: fixed; bottom: 25px; right: 25px; 
-            background: var(--primary); color: #000; padding: 12px 20px; 
-            font-size: 11px; font-weight: 800; border-radius: 4px; text-decoration: none;
-        }
+        /* Cancellation UI */
+        .footer-actions { text-align: center; padding: 20px 20px 100px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .track-btn-large { display: inline-block; padding: 12px 25px; border: 1px solid #fff; color: #fff; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 12px; }
+        .cancel-trigger { color: #999; font-size: 11px; text-decoration: underline; cursor: pointer; border: none; background: none; }
 
-        /* Track Order Footer */
-        .track-footer-container { text-align: center; padding: 40px 20px 100px; }
-        .track-btn-large {
-            display: inline-block;
-            padding: 15px 30px;
-            border: 2px solid #fff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 14px;
-        }
+        .cancel-input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 4px; text-align: center; font-family: monospace; font-size: 16px; }
+
+        .floating-contact { position: fixed; bottom: 25px; right: 25px; background: var(--primary); color: #000; padding: 12px 20px; font-size: 11px; font-weight: 800; border-radius: 4px; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -177,8 +118,7 @@
 </div>
 
 <div class="controls-container">
-    <input type="text" id="searchInput" class="search-box" placeholder="Search by name, code, or style..." onkeyup="filterAll()">
-    
+    <input type="text" id="searchInput" class="search-box" placeholder="Search collection..." onkeyup="filterAll()">
     <div class="categories">
         <button class="cat-btn active" onclick="setCategory('All', this)">All</button>
         <button class="cat-btn" onclick="setCategory('Short Kurtha', this)">Short Kurtha</button>
@@ -191,14 +131,17 @@
     <div class="grid" id="productList"></div>
 </div>
 
-<div class="track-footer-container">
+<div class="footer-actions">
     <a href="https://wa.me/918610328602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-btn-large">🚚 TRACK MY ORDER</a>
+    <button class="cancel-trigger" onclick="openCancelModal()">Need to cancel an order?</button>
 </div>
 
+<!-- Order Modal -->
 <div class="modal" id="orderModal">
     <div class="order-modal-content">
         <span class="close" onclick="closeOrderModal()">&times;</span>
         <h3 id="modalProdName">Product Name</h3>
+        <p style="font-size: 10px; color: #666; margin-top: 5px;">Your Temporary Order ID: <span id="tempOrderId" style="font-weight: 700; color: #000;"></span></p>
         <div class="size-container">
             <div class="size-chip" onclick="selectSize('XS', this)">XS</div>
             <div class="size-chip" onclick="selectSize('S', this)">S</div>
@@ -208,8 +151,19 @@
             <div class="size-chip" onclick="selectSize('XXL', this)">XXL</div>
         </div>
         <div class="order-options" id="orderActions">
-            <a href="#" target="_blank" class="method-btn wa" id="waLink">📱 Order via WhatsApp</a>
+            <a href="#" target="_blank" class="method-btn wa" id="waLink">📱 Confirm Order via WhatsApp</a>
         </div>
+    </div>
+</div>
+
+<!-- Cancellation Modal -->
+<div class="modal" id="cancelModal">
+    <div class="order-modal-content">
+        <span class="close" onclick="closeCancelModal()">&times;</span>
+        <h3>Cancel Order</h3>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">Enter your 6-digit Order ID to proceed</p>
+        <input type="text" id="cancelOrderId" class="cancel-input" placeholder="e.g. LB-123456">
+        <button class="method-btn wa" style="width:100%; border:none; cursor:pointer;" onclick="submitCancellation()">Request Cancellation</button>
     </div>
 </div>
 
@@ -220,6 +174,7 @@
     let currentCategory = "All";
     let selectedSize = "";
     let currentProduct = {};
+    let generatedOrderId = "";
 
     const products = [
         { id: "100", name: "Floral Short Kurtha", price: 500, image: "image/sk.jpg", category: "Short Kurtha" },
@@ -235,30 +190,13 @@
         const searchTerm = document.getElementById("searchInput").value.toLowerCase();
         const productList = document.getElementById("productList");
         productList.innerHTML = "";
-
         const filtered = products.filter(p => {
-            const matchesCategory = currentCategory === "All" || p.category === currentCategory;
-            const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
-                                 p.id.toLowerCase().includes(searchTerm) ||
-                                 p.category.toLowerCase().includes(searchTerm);
-            return matchesCategory && matchesSearch;
+            const matchesCat = currentCategory === "All" || p.category === currentCategory;
+            const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.id.includes(searchTerm);
+            return matchesCat && matchesSearch;
         });
-
-        if (filtered.length === 0) {
-            productList.innerHTML = `<div class="no-results">No items found for "${searchTerm}"</div>`;
-            return;
-        }
-
         filtered.forEach(p => {
-            productList.innerHTML += `
-            <div class="card">
-                <img src="${p.image}" alt="${p.name}">
-                <div class="card-content">
-                    <h3>${p.name}</h3>
-                    <div class="price">₹${p.price}</div>
-                    <button class="btn" onclick="openOrderModal('${p.id}', '${p.name}', '${p.price}')">Buy Now</button>
-                </div>
-            </div>`;
+            productList.innerHTML += `<div class="card"><img src="${p.image}"><div class="card-content"><h3>${p.name}</h3><div class="price">₹${p.price}</div><button class="btn" onclick="openOrderModal('${p.id}', '${p.name}', '${p.price}')">Buy Now</button></div></div>`;
         });
     }
 
@@ -272,7 +210,10 @@
     function openOrderModal(id, name, price) {
         currentProduct = { id, name, price };
         selectedSize = "";
+        // Generate a random 6-digit Order ID
+        generatedOrderId = "LB-" + Math.floor(100000 + Math.random() * 900000);
         document.getElementById("modalProdName").innerText = name;
+        document.getElementById("tempOrderId").innerText = generatedOrderId;
         document.getElementById("orderActions").classList.remove('active');
         document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('selected'));
         document.getElementById("orderModal").style.display = "flex";
@@ -283,11 +224,23 @@
         document.querySelectorAll('.size-chip').forEach(c => c.classList.remove('selected'));
         element.classList.add('selected');
         document.getElementById("orderActions").classList.add('active');
-        const message = `Order Request:\nItem: ${currentProduct.name}\nCode: ${currentProduct.id}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}`;
+        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}`;
         document.getElementById("waLink").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     }
 
     function closeOrderModal() { document.getElementById("orderModal").style.display = "none"; }
+
+    /* Cancellation Functions */
+    function openCancelModal() { document.getElementById("cancelModal").style.display = "flex"; }
+    function closeCancelModal() { document.getElementById("cancelModal").style.display = "none"; }
+    
+    function submitCancellation() {
+        const id = document.getElementById("cancelOrderId").value;
+        if(id.length < 3) { alert("Please enter a valid Order ID"); return; }
+        const cancelMsg = `CANCELLATION REQUEST\n------------\nI would like to cancel my order.\nOrder ID: ${id}`;
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(cancelMsg)}`, '_blank');
+        closeCancelModal();
+    }
 
     window.onload = filterAll;
 </script>
