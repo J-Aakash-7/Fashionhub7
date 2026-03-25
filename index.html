@@ -308,7 +308,7 @@ Scan & pay using GPay / PhonePe / Paytm
     function updateWAMessage() {
         if (!selectedSize) return;
         const address = document.getElementById("customerAddress").value;
-        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}\n\nDelivery Address:\n${address || 'Not provided yet'}\nTransaction ID:\n${address || 'Not provided yet'}`;
+        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}\nTransaction ID:\n${address || 'Not provided yet'}\n\nDelivery Address:\n${address || 'Not provided yet'}`;
         document.getElementById("waLink").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     }
 
