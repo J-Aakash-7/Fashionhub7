@@ -269,7 +269,8 @@ Scan & pay using GPay / PhonePe / Paytm
     function openOrderModal(id, name, price) {
         currentProduct = { id, name, price };
         selectedSize = "";
-        document.getElementById("customerAddress").value = ""; // Clear address
+        document.getElementById("customerAddress").value = "";
+        document.getElementById("transaction ID").value = "";// Clear address
         generatedOrderId = "LB-" + Math.floor(100000 + Math.random() * 900000);
         document.getElementById("modalProdName").innerText = name;
         document.getElementById("tempOrderId").innerText = generatedOrderId;
@@ -308,7 +309,7 @@ Scan & pay using GPay / PhonePe / Paytm
     function updateWAMessage() {
         if (!selectedSize) return;
         const address = document.getElementById("customerAddress").value;
-        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}\n\nDelivery Address:\n${address || 'Not provided yet'}`;
+        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}\n\nDelivery Address:\n${address || 'Not provided yet'}\nTransaction ID:\n${address || 'Not provided yet'}`;
         document.getElementById("waLink").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     }
 
