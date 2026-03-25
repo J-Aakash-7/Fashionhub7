@@ -174,9 +174,15 @@
         <textarea id="customerAddress" class="address-box" placeholder="Enter full delivery address (House No, Street, City, Pincode)..." oninput="updateWAMessage()"></textarea>
 
         <div class="order-options" id="orderActions">
+            <!-- UPI QR -->
+<img id="upiQR" style="width:200px;margin-top:10px;display:none;border-radius:8px;" />
+<p id="qrNote" style="font-size:11px;color:#666;display:none;">
+Scan & pay using GPay / PhonePe / Paytm
+</p>
             <button class="method-btn" style="background:#0f9d58;color:#fff;" onclick="payWithGPay()">📲 Pay with Google Pay</button>
-            <a href="#" target="_blank" class="method-btn wa" id="waLink">📱 Confirm Order via WhatsApp</a>
-            </div>
+        <button class="method-btn" style="background:#000;color:#fff;" onclick="showQR()">
+📷 Show QR Code
+</button>   
     </div>
 </div>
 
@@ -275,18 +281,24 @@
         document.getElementById("orderActions").classList.add('active');
         updateWAMessage();
     }
-    function payWithGPay() {
+ function showQR() {
     if (!selectedSize) {
         alert("Please select size first");
         return;
     }
 
     const amount = currentProduct.price;
+    const name = "Lina Bella";
     const note = `${currentProduct.name} (${selectedSize})`;
 
-    const upiLink = `upi://pay?pa=${upiId}&pn=Lina%20Bella&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
 
-    window.location.href = upiLink;
+    // Generate QR using API
+    const qrURL = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
+
+    document.getElementById("upiQR").src = qrURL;
+    document.getElementById("upiQR").style.display = "block";
+    document.getElementById("qrNote").style.display = "block";
 }
 
     function updateWAMessage() {
