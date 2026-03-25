@@ -296,20 +296,38 @@
         const cancelMsg = `CANCELLATION REQUEST\n------------\nI would like to cancel my order.\nOrder ID: ${id}`;
         window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(cancelMsg)}`, '_blank');
         closeCancelModal();
-    function payWithGPay() {
+function payWithGPay() {
     if (!selectedSize) {
         alert("Please select size first");
         return;
     }
 
     const amount = currentProduct.price;
+    const upiID = upiId; // your UPI
+
     const name = "Lina Bella";
-    const note = `${currentProduct.name} (${selectedSize})`;
+    const note = `${currentProduct.name} - ${selectedSize}`;
 
-    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+    const upiURL = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
 
-    // Open Google Pay / UPI app
-    window.location.href = upiLink;
+    // Try opening UPI app
+    window.location.href = upiURL;
+
+    // Backup: open WhatsApp instruction
+    setTimeout(() => {
+        const msg = `PAYMENT INSTRUCTION
+Order ID: ${generatedOrderId}
+Product: ${currentProduct.name}
+Size: ${selectedSize}
+Amount: ₹${amount}
+
+Pay via Google Pay to: ${upiID}
+Then send screenshot.`;
+
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`);
+    }, 2500);
+}
+
 
     // Optional: WhatsApp follow-up
     const message = `PAYMENT DONE
