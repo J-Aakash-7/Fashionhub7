@@ -317,14 +317,21 @@ Scan & pay using GPay / PhonePe / Paytm
     function openCancelModal() { document.getElementById("cancelModal").style.display = "flex"; }
     function closeCancelModal() { document.getElementById("cancelModal").style.display = "none"; }
     
-    function submitCancellation() {
-        const id = document.getElementById("cancelOrderId").value;
-        if(id.length < 3) { alert("Please enter a valid Order ID"); return; }
-        const cancelMsg = `CANCELLATION REQUEST\n------------\nI would like to cancel my order.\nOrder ID: ${id}`;
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(cancelMsg)}`, '_blank');
-        closeCancelModal();
+   function submitCancellation() {
+    const id = document.getElementById("cancelOrderId").value.trim();
+
+    if (id === "" || id.length < 6) {
+        alert("Please enter a valid Order ID (e.g. LB-123456)");
+        return;
     }
 
+    const cancelMsg = `CANCELLATION REQUEST\n------------\nI would like to cancel my order.\nOrder ID: ${id}`;
+
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(cancelMsg)}`;
+
+    window.open(url, '_blank');
+    closeCancelModal();
+}
     window.onload = filterAll;
 </script>
 </body>
