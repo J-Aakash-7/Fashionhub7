@@ -153,6 +153,12 @@
  <a href="https://wa.me/918122668602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-btn-large">🚚 TRACK MY ORDER</a>
  <button class="cancel-trigger" onclick="openCancelModal()">Need to cancel an order?</button>
 </div>
+<div class="modal" id="previewModal" onclick="closePreview()">
+    <div class="order-modal-content">
+        <img id="fullImage" src="" alt="Preview">
+        <p style="color: #fff; margin-top: 10px; font-size: 12px;">Click anywhere to close</p>
+    </div>
+</div>
 
 <!-- Order Modal -->
 <div class="modal" id="orderModal">
@@ -174,12 +180,7 @@
         <textarea id="customerAddress" class="address-box" placeholder="Enter full delivery address (House No, Street, City, Pincode)..." oninput="updateWAMessage()"></textarea>
 
         <div class="order-options" id="orderActions">
-<div class="modal" id="previewModal" onclick="closePreview()">
-    <div class="order-modal-content">
-        <img id="fullImage" src="" alt="Preview">
-        <p style="color: #fff; margin-top: 10px; font-size: 12px;">Click anywhere to close</p>
-    </div>
-</div>
+
             <!-- UPI QR -->
 <img id="upiQR" style="width:200px;margin-top:10px;display:none;border-radius:8px;" />
 <p id="qrNote" style="font-size:11px;color:#666;display:none;">
