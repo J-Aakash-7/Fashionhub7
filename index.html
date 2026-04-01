@@ -43,6 +43,27 @@
             border-radius: 20px; font-size: 10px; font-weight: 700;
             text-transform: uppercase;
         }
+         .announcement-bar {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .announcement-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: scrollText 12s linear infinite;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        @keyframes scrollText {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
 
         /* Search & Filter */
         .controls-container { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; text-align: center; }
@@ -133,6 +154,11 @@
     <a href="https://wa.me/918122668602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-header">Track Order</a>
     <img src="logo.png" class="main-logo" alt="Logo">
     <h2>Lina Bella</h2>
+    <div class="announcement-bar">
+        <div class="announcement-text">
+            ✨Jewwls and Cosmetics temporarily not available , will added soon✨
+        </div>
+    </div>
 </div>
 
 <div class="controls-container">
