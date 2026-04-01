@@ -223,7 +223,7 @@ Scan & pay using GPay / PhonePe / Paytm
     let generatedOrderId = "";
 
     const products = [
-        { id: "100", name: "Floral Short Kurtha", price: 10, image: "image/sk.jpg", category: "Short Kurtha" },
+        { id: "100", name: "Floral Short Kurtha", price: 10, image: "image/sk.jpg", category: "College wear" },
         { id: "101", name: "Premium Blue Kurtha", price: 2999, image: "image/1.jpg", category: "Short Kurtha" },
         { id: "102", name: "White Formal Shirt", price: 1499, image: "image/2.jpg", category: "Formal" },
         { id: "103", name: "Ethnic Red Special", price: 899, image: "image/3.jpg", category: "Ethnic" },
@@ -311,7 +311,7 @@ Scan & pay using GPay / PhonePe / Paytm
     function updateWAMessage() {
         if (!selectedSize) return;
         const address = document.getElementById("customerAddress").value;
-        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}\nTransaction ID:\n${address || 'Not provided yet'}\n\nDelivery Address:\n${address || 'Not provided yet'}`;
+        const message = `ORDER REQUEST\n------------\nOrder ID: ${generatedOrderId}\nItem: ${currentProduct.name}\nSize: ${selectedSize}\nPrice: ₹${currentProduct.price}\nTransaction ID:\n${Transaction ID || 'Not provided yet'}\n\nDelivery Address:\n${address || 'Not provided yet'}`;
         document.getElementById("waLink").href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     }
 
