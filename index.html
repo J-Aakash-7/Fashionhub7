@@ -3,149 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lina Bella | College Wear</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <title>Lina Bella | One stop college wear </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00f5d4; 
-            --bg-overlay: rgba(0, 0, 0, 0.75);
-            --card-bg: rgba(255, 255, 255, 0.08);
+            --ink: #1c0f16;         /* deep aubergine-black, page base */
+            --wine: #3a1626;        /* secondary depth tone */
+            --parchment: #f6ede1;   /* card / light surface */
+            --parchment-dim: #ece0d1;
+            --gold: #c8a05c;        /* foil accent */
+            --gold-soft: rgba(200, 160, 92, 0.35);
+            --blush: #d98fa0;       /* secondary accent, hover */
+            --charcoal: #100a0d;
+            --ink-text: #2a1620;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
-            background: linear-gradient(var(--bg-overlay), rgba(0, 0, 0, 0.85)), 
-                        url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=870&auto=format&fit=crop');
+            background:
+                radial-gradient(ellipse at top, rgba(200,160,92,0.10), transparent 55%),
+                linear-gradient(180deg, rgba(28,15,22,0.94), rgba(16,10,13,0.97)),
+                url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?q=80&w=870&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: #fff;
+            color: var(--parchment);
             min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Jost', sans-serif;
         }
 
-        /* Brand Section */
-        .brand-section { text-align: center; padding: 60px 20px 20px; position: relative; }
-        .brand-section .main-logo {
-            width: 100px; height: auto; margin-bottom: 15px;
-            filter: drop-shadow(0 0 15px rgba(0,245,212,0.5));
+        /* ===== Masthead ===== */
+        .brand-section {
+            text-align: center;
+            padding: 56px 20px 22px;
+            position: relative;
+            border-bottom: 1px solid var(--gold-soft);
         }
-        .brand-section h2 { 
-            font-family: 'Playfair Display', serif; font-size: 32px; 
-            letter-spacing: 2px;
+        .brand-section::before,
+        .brand-section::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .brand-section::before { top: 26px; }
+        .brand-section::after { top: 32px; opacity: 0.5; }
+
+        .brand-section .main-logo {
+            width: 76px; height: auto; margin-bottom: 14px;
+            filter: drop-shadow(0 0 14px rgba(200,160,92,0.35));
+        }
+        .brand-section h2 {
+            font-family: 'Fraunces', serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-size: 40px;
+            letter-spacing: 1px;
+            color: var(--parchment);
+        }
+        .brand-section .kicker {
+            display: block;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
         }
 
         .track-header {
-            position: absolute; top: 20px; right: 20px;
-            padding: 8px 15px; border: 1px solid var(--primary);
-            color: var(--primary); text-decoration: none;
-            border-radius: 20px; font-size: 10px; font-weight: 700;
-            text-transform: uppercase;
+            position: absolute; top: 24px; right: 24px;
+            padding: 8px 16px; border: 1px solid var(--gold);
+            color: var(--gold); text-decoration: none;
+            border-radius: 2px; font-size: 10px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            font-family: 'Space Mono', monospace;
+            transition: 0.25s ease;
         }
-         .announcement-bar {
-            width: 100%;
-            overflow: hidden;
-            margin-top: 15px;
-        }
+        .track-header:hover { background: var(--gold); color: var(--charcoal); }
 
+        .announcement-bar { width: 100%; overflow: hidden; margin-top: 18px; }
         .announcement-text {
             display: inline-block;
             white-space: nowrap;
             padding-left: 100%;
-            animation: scrollText 25s linear infinite;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 1px;
+            animation: scrollText 26s linear infinite;
+            color: var(--blush);
+            font-family: 'Space Mono', monospace;
+            font-weight: 400;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
-
         @keyframes scrollText {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
 
-        /* Search & Filter */
-        .controls-container { max-width: 600px; margin: 0 auto 40px; padding: 0 20px; text-align: center; }
+        /* ===== Search & filter, styled as an index card ===== */
+        .controls-container { max-width: 600px; margin: 40px auto 44px; padding: 0 20px; text-align: center; }
         .search-box {
-            width: 100%; padding: 15px 25px; background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px;
-            color: #fff; font-size: 14px; margin-bottom: 20px; outline: none; transition: 0.3s;
+            width: 100%; padding: 15px 24px; background: rgba(246, 237, 225, 0.06);
+            border: 1px solid var(--gold-soft); border-radius: 2px;
+            color: var(--parchment); font-family: 'Jost', sans-serif; font-size: 14px;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px; outline: none; transition: 0.3s;
         }
-        .search-box:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 245, 212, 0.2); }
+        .search-box::placeholder { color: rgba(246,237,225,0.45); font-style: italic; }
+        .search-box:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,160,92,0.12); }
 
-        .categories { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .categories { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .cat-btn {
-            padding: 8px 15px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff; cursor: pointer; border-radius: 20px; font-size: 11px; text-transform: uppercase; transition: 0.3s;
+            padding: 9px 18px; background: transparent; border: 1px solid rgba(246,237,225,0.25);
+            color: var(--parchment); cursor: pointer; border-radius: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+            transition: 0.25s ease;
         }
-        .cat-btn.active, .cat-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+        .cat-btn.active, .cat-btn:hover { background: var(--gold); color: var(--charcoal); border-color: var(--gold); }
 
-        /* Grid */
-        .container { padding: 0 20px 50px; max-width: 1200px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        
-        .card { 
-            background: var(--card-bg); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px;
-            overflow: hidden; transition: 0.4s ease;
+        /* ===== Product grid — hang-tag cards ===== */
+        .container { padding: 0 20px 56px; max-width: 1200px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 34px; }
+
+        .card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(246,237,225,0.05), rgba(246,237,225,0.02));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(246,237,225,0.10);
+            border-radius: 3px;
+            overflow: visible;
+            padding-top: 14px;
+            transition: transform 0.35s ease, border-color 0.35s ease;
         }
-        .card img { width: 100%; height: 350px; object-fit: cover; cursor: zoom-in; }
-        .card-content { padding: 20px; text-align: center; }
-        .price { font-size: 20px; color: var(--primary); font-weight: 700; margin-bottom: 15px; }
+        .card:hover { transform: translateY(-6px); border-color: var(--gold-soft); }
 
-        .btn { 
-            width: 100%; padding: 12px; border: 1px solid var(--primary); 
-            background: transparent; color: var(--primary); 
-            cursor: pointer; font-weight: 700; text-transform: uppercase; border-radius: 4px;
+        /* signature: a punched hang-tag notch above every card */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -9px; left: 50%;
+            transform: translateX(-50%);
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--ink);
+            border: 1px solid var(--gold);
+            box-shadow: inset 0 0 0 3px rgba(28,15,22,0.9);
+            z-index: 3;
         }
-        .btn:hover { background: var(--primary); color: #000; }
+        .card::after {
+            content: "";
+            position: absolute;
+            top: -1px; left: 50%;
+            transform: translateX(-50%);
+            width: 1px; height: 15px;
+            background: var(--gold-soft);
+            z-index: 2;
+        }
 
-        /* Modals */
-        .modal { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 2000;
+        .card img {
+            width: 100%; height: 340px; object-fit: cover; cursor: zoom-in;
+            border-bottom: 1px solid rgba(246,237,225,0.10);
+            filter: saturate(0.92) contrast(1.02);
+            transition: filter 0.3s ease;
+        }
+        .card img:hover { filter: saturate(1.05) contrast(1.05); }
+
+        .card-content { padding: 22px 20px 24px; text-align: center; }
+        .card-content h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 19px;
+            letter-spacing: 0.3px;
+            color: var(--parchment);
+            margin-bottom: 10px;
+        }
+        .price {
+            font-family: 'Space Mono', monospace;
+            font-size: 17px; color: var(--gold); font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .price::before { content: "— "; opacity: 0.5; }
+        .price::after { content: " —"; opacity: 0.5; }
+
+        .btn {
+            width: 100%; padding: 13px; border: 1px solid var(--gold);
+            background: transparent; color: var(--gold);
+            cursor: pointer; font-family: 'Space Mono', monospace;
+            font-weight: 700; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; border-radius: 2px;
+            transition: 0.25s ease;
+        }
+        .btn:hover { background: var(--gold); color: var(--charcoal); }
+
+        /* ===== Modals ===== */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(16,10,13,0.92); justify-content: center; align-items: center; z-index: 2000;
         }
         .order-modal-content {
-            background: #fff; padding: 30px; border-radius: 12px;
-            width: 90%; max-width: 400px; color: #000; text-align: center; position: relative;
+            background: var(--parchment); padding: 32px 30px; border-radius: 4px;
+            width: 90%; max-width: 400px; color: var(--ink-text); text-align: center; position: relative;
+            border-top: 3px solid var(--gold);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
-        .size-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 15px 0; }
-        .size-chip { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; }
-        .size-chip.selected { background: #000; color: #fff; border-color: #000; }
-        
-        /* Address Bar Styling */
+        .order-modal-content h3 {
+            font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px;
+        }
+        .order-modal-content > p {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .size-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0; }
+        .size-chip {
+            padding: 9px 13px; border: 1px solid #d8ccb9; border-radius: 2px;
+            cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+            color: var(--ink-text); transition: 0.2s ease;
+        }
+        .size-chip:hover { border-color: var(--ink-text); }
+        .size-chip.selected { background: var(--ink-text); color: var(--parchment); border-color: var(--ink-text); }
+
         .address-box {
             width: 100%;
             height: 80px;
             margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: inherit;
+            padding: 12px;
+            border: 1px solid #d8ccb9;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
             font-size: 13px;
             resize: none;
             outline: none;
+            background: #fffdfa;
         }
+        .address-box:focus { border-color: var(--ink-text); }
 
-        .order-options { display: flex; flex-direction: column; gap: 10px; opacity: 0.2; pointer-events: none; margin-top: 15px; }
+        .order-options { display: flex; flex-direction: column; gap: 10px; opacity: 0.2; pointer-events: none; margin-top: 16px; }
         .order-options.active { opacity: 1; pointer-events: auto; }
-        .method-btn { padding: 14px; border-radius: 4px; font-weight: 700; text-decoration: none; display: block; }
+        .method-btn {
+            padding: 14px; border-radius: 2px; font-weight: 700; text-decoration: none;
+            display: block; font-family: 'Space Mono', monospace; font-size: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+            transition: 0.2s ease;
+        }
         .method-btn.wa { background: #25D366; color: #fff; }
-        .close { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #999; }
+        .method-btn.wa:hover { filter: brightness(1.05); }
+        .close {
+            position: absolute; right: 16px; top: 12px; font-size: 22px; cursor: pointer;
+            color: #b3a692; font-family: 'Jost', sans-serif;
+        }
+        .close:hover { color: var(--ink-text); }
 
         /* Image Preview Modal */
-        #previewModal .order-modal-content { background: transparent; max-width: 80%; padding: 0; }
-        #previewModal img { max-width: 100%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        #previewModal .order-modal-content { background: transparent; max-width: 80%; padding: 0; box-shadow: none; border-top: none; }
+        #previewModal img { max-width: 100%; max-height: 80vh; border-radius: 3px; box-shadow: 0 0 40px rgba(0,0,0,0.6); border: 1px solid var(--gold-soft); }
+        #previewModal p { color: var(--parchment) !important; font-family: 'Space Mono', monospace !important; }
 
-        /* Cancellation UI */
-        .footer-actions { text-align: center; padding: 20px 20px 100px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
-        .track-btn-large { display: inline-block; padding: 12px 25px; border: 1px solid #fff; color: #fff; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 12px; }
-        .cancel-trigger { color: #999; font-size: 11px; text-decoration: underline; cursor: pointer; border: none; background: none; }
+        /* ===== Footer ===== */
+        .footer-actions { text-align: center; padding: 30px 20px 110px; display: flex; flex-direction: column; gap: 16px; align-items: center; }
+        .track-btn-large {
+            display: inline-block; padding: 13px 30px; border: 1px solid var(--gold);
+            color: var(--gold); text-decoration: none; border-radius: 20px;
+            font-family: 'Space Mono', monospace; font-weight: 700; font-size: 11px;
+            letter-spacing: 2px; text-transform: uppercase; transition: 0.25s ease;
+        }
+        .track-btn-large:hover { background: var(--gold); color: var(--charcoal); }
+        .cancel-trigger {
+            color: rgba(246,237,225,0.55); font-family: 'Jost', sans-serif; font-size: 12px;
+            text-decoration: underline; cursor: pointer; border: none; background: none;
+        }
+        .cancel-trigger:hover { color: var(--blush); }
 
-        .cancel-input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ddd; border-radius: 4px; text-align: center; font-family: monospace; font-size: 16px; }
+        .cancel-input {
+            width: 100%; padding: 12px; margin: 16px 0; border: 1px solid #d8ccb9; border-radius: 2px;
+            text-align: center; font-family: 'Space Mono', monospace; font-size: 16px; background: #fffdfa;
+        }
 
-        .floating-contact { position: fixed; bottom: 25px; right: 25px; background: var(--primary); color: #000; padding: 12px 20px; font-size: 11px; font-weight: 800; border-radius: 4px; text-decoration: none; }
+        .floating-contact {
+            position: fixed; bottom: 25px; right: 25px; background: var(--gold); color: var(--charcoal);
+            padding: 13px 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+            border-radius: 2px; text-decoration: none; font-family: 'Space Mono', monospace;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+            transition: 0.25s ease;
+        }
+        .floating-contact:hover { background: var(--blush); }
+
+        @media (max-width: 480px) {
+            .brand-section h2 { font-size: 32px; }
+            .track-header { position: static; display: inline-block; margin-top: 14px; }
+        }
     </style>
 </head>
 <body>
@@ -153,20 +305,21 @@
 <div class="brand-section">
     <a href="https://wa.me/918122668602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-header">Track Order</a>
     <img src="logo.png" class="main-logo" alt="Logo">
+    <span class="kicker">The Atelier Edit</span>
     <h2>Lina Bella</h2>
     <div class="announcement-bar">
         <div class="announcement-text">
-            ✨Jewels and Cosmetics temporarily not available , will added soon✨
+            ✨ Jewels &amp; Cosmetics are resting off-runway for now — back in the collection soon ✨
         </div>
     </div>
 </div>
 
 <div class="controls-container">
-    <input type="text" id="searchInput" class="search-box" placeholder="Search collection..." onkeyup="filterAll()">
+    <input type="text" id="searchInput" class="search-box" placeholder="Search the collection…" onkeyup="filterAll()">
     <div class="categories">
-        <button class="cat-btn" onclick="setCategory('College wear', this)">College wear</button>
-        <button class="cat-btn" onclick="setCategory('Function wear', this)">Function wear</button>
-        <button class="cat-btn" onclick="setCategory('Hostel wear', this)">Hostel wear</button>
+        <button class="cat-btn" onclick="setCategory('College wear', this)">College Wear</button>
+        <button class="cat-btn" onclick="setCategory('Function wear', this)">Function Wear</button>
+        <button class="cat-btn" onclick="setCategory('Hostel wear', this)">Hostel Wear</button>
         <button class="cat-btn" onclick="setCategory('Jewels', this)">Jewels</button>
         <button class="cat-btn" onclick="setCategory('Cosmetics', this)">Cosmetics</button>
     </div>
@@ -177,13 +330,14 @@
 </div>
 
 <div class="footer-actions">
- <a href="https://wa.me/918122668602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-btn-large">🚚 TRACK MY ORDER</a>
+ <a href="https://wa.me/918122668602?text=Hello%20Lina%20Bella!%20Where%20is%20my%20order?" class="track-btn-large">🚚 Track My Order</a>
  <button class="cancel-trigger" onclick="openCancelModal()">Need to cancel an order?</button>
 </div>
+
 <div class="modal" id="previewModal" onclick="closePreview()">
     <div class="order-modal-content">
         <img id="fullImage" src="" alt="Preview">
-        <p style="color: #fff; margin-top: 10px; font-size: 12px;">Click anywhere to close</p>
+        <p style="margin-top: 10px; font-size: 11px; letter-spacing: 1px;">Tap anywhere to close</p>
     </div>
 </div>
 
@@ -192,8 +346,8 @@
     <div class="order-modal-content">
         <span class="close" onclick="closeOrderModal()">&times;</span>
         <h3 id="modalProdName">Product Name</h3>
-        <p style="font-size: 10px; color: #666; margin-top: 5px;">Your Temporary Order ID: <span id="tempOrderId" style="font-weight: 700; color: #000;"></span></p>
-        
+        <p style="font-size: 10px; color: #a39682; margin-top: 6px; letter-spacing: 1px;">Order Ref — <span id="tempOrderId" style="font-weight: 700; color: var(--ink-text);"></span></p>
+
         <div class="size-container">
             <div class="size-chip" onclick="selectSize('XS', this)">XS</div>
             <div class="size-chip" onclick="selectSize('S', this)">S</div>
@@ -204,40 +358,37 @@
         </div>
 
         <!-- Address Bar -->
-        <textarea id="customerAddress" class="address-box" placeholder="Enter full delivery address (House No, Street, City, Pincode)..." oninput="updateWAMessage()"></textarea>
+        <textarea id="customerAddress" class="address-box" placeholder="Delivery address — house no., street, city, pincode…" oninput="updateWAMessage()"></textarea>
 
         <div class="order-options" id="orderActions">
 
             <!-- UPI QR -->
-<img id="upiQR" style="width:200px;margin-top:10px;display:none;border-radius:8px;" />
-<p id="qrNote" style="font-size:11px;color:#666;display:none;">
-Scan & pay using GPay / PhonePe / Paytm
+<img id="upiQR" style="width:200px;margin-top:10px;display:none;border-radius:6px;border:1px solid #e5dac6;" />
+<p id="qrNote" style="font-size:11px;color:#a39682;display:none;letter-spacing:0.5px;">
+Scan &amp; pay via GPay / PhonePe / Paytm
 </p>
-          
-<button class="method-btn" style="background:#000;color:#fff;" onclick="showQR()">
-📷 Show QR Code
-</button>   
-         
+
+<button class="method-btn" style="background:var(--ink-text);color:#fff;" onclick="showQR()">
+📷 Show Payment QR
+</button>
+
     <a href="#" target="_blank" class="method-btn wa" id="waLink">📱 Confirm Order via WhatsApp</a>
 
     </div>
 </div>
 
-<!-- Image Preview Modal -->
-
-
 <!-- Cancellation Modal -->
 <div class="modal" id="cancelModal">
     <div class="order-modal-content">
         <span class="close" onclick="closeCancelModal()">&times;</span>
-        <h3>Cancel Order</h3>
-        <p style="font-size: 12px; color: #666; margin-top: 10px;">Enter your 6-digit Order ID to proceed</p>
+        <h3>Cancel an Order</h3>
+        <p style="font-size: 12px; color: #a39682; margin-top: 10px;">Enter your 6-digit Order ID to proceed</p>
         <input type="text" id="cancelOrderId" class="cancel-input" placeholder="e.g. LB-123456">
         <button class="method-btn wa" style="width:100%; border:none; cursor:pointer;" onclick="submitCancellation()">Request Cancellation</button>
     </div>
 </div>
 
-<a href="tel:8610328602" class="floating-contact">📞 CALL: 8610328602</a>
+<a href="tel:8610328602" class="floating-contact">📞 Call 8610328602</a>
 
 <script>
     const whatsappNumber = "918122668602";
@@ -344,13 +495,13 @@ Scan & pay using GPay / PhonePe / Paytm
 
     function openCancelModal() { document.getElementById("cancelModal").style.display = "flex"; }
     function closeCancelModal() { document.getElementById("cancelModal").style.display = "none"; }
-    
+
   function submitCancellation() {
     const id = document.getElementById("cancelOrderId").value;
 
-    if(id.length < 3) { 
-        alert("Please enter a valid Order ID"); 
-        return; 
+    if(id.length < 3) {
+        alert("Please enter a valid Order ID");
+        return;
     }
 
     const cancelMsg = `CANCELLATION REQUEST\n------------\nI would like to cancel my order.\nOrder ID: ${id}`;
